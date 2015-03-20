@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<custom-sql>
+	<sql id="getUserFirstName">
+		<![CDATA[
+		select 
+			firstname 
+		from 
+			user_ 
+		where 
+			userid=?
+		]]>
+	</sql>
+	<sql id="getUserLastName">
+		<![CDATA[
+		select 
+			lastname 
+		from 
+			user_ 
+		where 
+			userid=?
+		]]>
+	</sql>
+
+	<sql id="getOrganizationDetails">
+		<![CDATA[
+	select {query.*} from (select 
+			id,name, address, postal_code, city, phone, fax, email
+		from 
+			mz_organization
+		where 
+			id=?) query
+		]]>
+	</sql>
+</custom-sql>

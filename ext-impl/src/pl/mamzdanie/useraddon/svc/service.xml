@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 5.2.0//EN"
+	"http://www.liferay.com/dtd/liferay-service-builder_5_2_0.dtd">
+
+<service-builder package-path="pl.mamzdanie.useraddon.svc">
+	<namespace>thread_detail</namespace>
+	<entity name="UserAddon" local-service="true" remote-service="false"
+		table="mz_user_addon">
+		<column name="userId" db-name="userid" type="long" primary="true" />
+		<column name="phone" db-name="phone" type="String" />
+		<column name="position" db-name="companyposition" type="String" />
+		<column name="organizationId" db-name="organizationid" type="Long" />
+		<column name="notify" db-name="notify" type="Boolean" />
+		<column name="apiKey" db-name="apikey" type="String" />
+		<column name="description" db-name="description" type="String" />
+	</entity>
+</service-builder>

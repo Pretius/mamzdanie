@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<bean id="applicationVersion" class="java.lang.String">
+		<constructor-arg index="0" type="java.lang.String" value="@buildstamp@" />
+	</bean>
+	<bean id="applicationServerBaseUrl" class="java.lang.String">
+		<constructor-arg index="0" type="java.lang.String" value="@appServerBaseUrl@" />
+	</bean>
+	<bean id="com.ext.portlet.reports.service.ReportsEntryService.impl" class="com.ext.portlet.reports.service.impl.ReportsEntryServiceImpl" />
+	<bean id="com.ext.portlet.reports.service.ReportsEntryService.velocity" class="org.springframework.aop.framework.ProxyFactoryBean" parent="baseVelocityService">
+		<property name="target" ref="com.ext.portlet.reports.service.ReportsEntryService.impl" />
+	</bean>
+	<bean id="com.ext.portlet.reports.service.ReportsEntryServiceUtil" class="com.ext.portlet.reports.service.ReportsEntryServiceUtil">
+		<property name="service" ref="com.ext.portlet.reports.service.ReportsEntryService.impl" />
+	</bean>
+	<bean id="com.ext.portlet.reports.service.persistence.ReportsEntryPersistence.impl" class="com.ext.portlet.reports.service.persistence.ReportsEntryPersistenceImpl" parent="basePersistence" />
+	<bean id="com.ext.portlet.reports.service.persistence.ReportsEntryUtil" class="com.ext.portlet.reports.service.persistence.ReportsEntryUtil">
+		<property name="persistence" ref="com.ext.portlet.reports.service.persistence.ReportsEntryPersistence.impl" />
+	</bean>
+	<bean id="pl.mamzdanie.mbthreadaddon.svc.service.MBAddonLocalService.impl" class="pl.mamzdanie.mbthreadaddon.svc.service.impl.MBAddonLocalServiceImpl" />
+	<bean id="pl.mamzdanie.mbthreadaddon.svc.service.MBAddonLocalService.velocity" class="org.springframework.aop.framework.ProxyFactoryBean" parent="baseVelocityService">
+		<property name="target" ref="pl.mamzdanie.mbthreadaddon.svc.service.MBAddonLocalService.impl" />
+	</bean>
+	<bean id="pl.mamzdanie.mbthreadaddon.svc.service.MBAddonLocalServiceUtil" class="pl.mamzdanie.mbthreadaddon.svc.service.MBAddonLocalServiceUtil">
+		<property name="service" ref="pl.mamzdanie.mbthreadaddon.svc.service.MBAddonLocalService.impl" />
+	</bean>
+	<bean id="pl.mamzdanie.mbthreadaddon.svc.service.persistence.MBAddonPersistence.impl" class="pl.mamzdanie.mbthreadaddon.svc.service.persistence.MBAddonPersistenceImpl" parent="basePersistence" />
+	<bean id="pl.mamzdanie.mbthreadaddon.svc.service.persistence.MBAddonUtil" class="pl.mamzdanie.mbthreadaddon.svc.service.persistence.MBAddonUtil">
+		<property name="persistence" ref="pl.mamzdanie.mbthreadaddon.svc.service.persistence.MBAddonPersistence.impl" />
+	</bean>
+	<bean id="pl.mamzdanie.threaddetail.svc.service.ThreadDetailLocalService.impl" class="pl.mamzdanie.threaddetail.svc.service.impl.ThreadDetailLocalServiceImpl" />
+	<bean id="pl.mamzdanie.threaddetail.svc.service.ThreadDetailLocalService.velocity" class="org.springframework.aop.framework.ProxyFactoryBean" parent="baseVelocityService">
+		<property name="target" ref="pl.mamzdanie.threaddetail.svc.service.ThreadDetailLocalService.impl" />
+	</bean>
+	<bean id="pl.mamzdanie.threaddetail.svc.service.ThreadDetailLocalServiceUtil" class="pl.mamzdanie.threaddetail.svc.service.ThreadDetailLocalServiceUtil">
+		<property name="service" ref="pl.mamzdanie.threaddetail.svc.service.ThreadDetailLocalService.impl" />
+	</bean>
+	<bean id="pl.mamzdanie.threaddetail.svc.service.persistence.ThreadDetailPersistence.impl" class="pl.mamzdanie.threaddetail.svc.service.persistence.ThreadDetailPersistenceImpl" parent="basePersistence" />
+	<bean id="pl.mamzdanie.threaddetail.svc.service.persistence.ThreadDetailUtil" class="pl.mamzdanie.threaddetail.svc.service.persistence.ThreadDetailUtil">
+		<property name="persistence" ref="pl.mamzdanie.threaddetail.svc.service.persistence.ThreadDetailPersistence.impl" />
+	</bean>
+	<bean id="pl.mamzdanie.userorganization.svc.service.UserOrganizationLocalService.impl" class="pl.mamzdanie.userorganization.svc.service.impl.UserOrganizationLocalServiceImpl" />
+	<bean id="pl.mamzdanie.userorganization.svc.service.UserOrganizationLocalService.velocity" class="org.springframework.aop.framework.ProxyFactoryBean" parent="baseVelocityService">
+		<property name="target" ref="pl.mamzdanie.userorganization.svc.service.UserOrganizationLocalService.impl" />
+	</bean>
+	<bean id="pl.mamzdanie.userorganization.svc.service.UserOrganizationLocalServiceUtil" class="pl.mamzdanie.userorganization.svc.service.UserOrganizationLocalServiceUtil">
+		<property name="service" ref="pl.mamzdanie.userorganization.svc.service.UserOrganizationLocalService.impl" />
+	</bean>
+	<bean id="pl.mamzdanie.userorganization.svc.service.persistence.UserOrganizationPersistence.impl" class="pl.mamzdanie.userorganization.svc.service.persistence.UserOrganizationPersistenceImpl" parent="basePersistence" />
+	<bean id="pl.mamzdanie.userorganization.svc.service.persistence.UserOrganizationUtil" class="pl.mamzdanie.userorganization.svc.service.persistence.UserOrganizationUtil">
+		<property name="persistence" ref="pl.mamzdanie.userorganization.svc.service.persistence.UserOrganizationPersistence.impl" />
+	</bean>
+	<bean id="pl.mamzdanie.userorganization.svc.service.persistence.UserOrganizationFinder.impl" class="pl.mamzdanie.userorganization.svc.service.persistence.UserOrganizationFinderImpl" parent="basePersistence" />
+	<bean id="pl.mamzdanie.userorganization.svc.service.persistence.UserOrganizationFinderUtil" class="pl.mamzdanie.userorganization.svc.service.persistence.UserOrganizationFinderUtil">
+		<property name="finder" ref="pl.mamzdanie.userorganization.svc.service.persistence.UserOrganizationFinder.impl" />
+	</bean>
+	<bean id="pl.mamzdanie.useraddon.svc.service.UserAddonLocalService.impl" class="pl.mamzdanie.useraddon.svc.service.impl.UserAddonLocalServiceImpl" />
+	<bean id="pl.mamzdanie.useraddon.svc.service.UserAddonLocalService.velocity" class="org.springframework.aop.framework.ProxyFactoryBean" parent="baseVelocityService">
+		<property name="target" ref="pl.mamzdanie.useraddon.svc.service.UserAddonLocalService.impl" />
+	</bean>
+	<bean id="pl.mamzdanie.useraddon.svc.service.UserAddonLocalServiceUtil" class="pl.mamzdanie.useraddon.svc.service.UserAddonLocalServiceUtil">
+		<property name="service" ref="pl.mamzdanie.useraddon.svc.service.UserAddonLocalService.impl" />
+	</bean>
+	<bean id="pl.mamzdanie.useraddon.svc.service.persistence.UserAddonPersistence.impl" class="pl.mamzdanie.useraddon.svc.service.persistence.UserAddonPersistenceImpl" parent="basePersistence" />
+	<bean id="pl.mamzdanie.useraddon.svc.service.persistence.UserAddonUtil" class="pl.mamzdanie.useraddon.svc.service.persistence.UserAddonUtil">
+		<property name="persistence" ref="pl.mamzdanie.useraddon.svc.service.persistence.UserAddonPersistence.impl" />
+	</bean>
+	<bean id="pl.mamzdanie.useraddon.svc.service.persistence.UserAddonFinder.impl" class="pl.mamzdanie.useraddon.svc.service.persistence.UserAddonFinderImpl" parent="basePersistence" />
+	<bean id="pl.mamzdanie.useraddon.svc.service.persistence.UserAddonFinderUtil" class="pl.mamzdanie.useraddon.svc.service.persistence.UserAddonFinderUtil">
+		<property name="finder" ref="pl.mamzdanie.useraddon.svc.service.persistence.UserAddonFinder.impl" />
+	</bean>
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="summaryCheckerTrigger" />
+			</list>
+		</property>
+	</bean>
+	<bean id="summaryCheckerTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<!-- see the example of method invoking job above -->
+		<property name="jobDetail">
+			<bean class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+				<property name="targetObject" ref="summaryManager" />
+				<property name="targetMethod" value="checkAllThreads" />
+				<property name="concurrent" value="false" />
+			</bean>
+		</property>
+		<property name="cronExpression" value="0 5 0 * * ?" />
+	</bean>
+	<bean id="summaryManager" class="pl.mamzdanie.manager.impl.SummaryManagerImpl" />
+	<bean id="notificationManager" class="pl.mamzdanie.manager.impl.NotificationManagerImpl">
+		<property name="mailService" ref="com.liferay.mail.service.MailService.impl" />
+	</bean>
+	<bean id="moderatorManager" class="pl.mamzdanie.manager.impl.ModeratorManagerImpl">
+		<property name="mailService" ref="com.liferay.mail.service.MailService.impl" />
+		<property name="appVersion" ref="applicationVersion" />
+		<property name="applicationServerBaseUrl" ref="applicationServerBaseUrl" />
+	</bean>
+	<bean id="pl.mamzdanie.mbmessageaddon.svc.service.MBMessageAddonLocalService.impl" class="pl.mamzdanie.mbmessageaddon.svc.service.impl.MBMessageAddonLocalServiceImpl" />
+	<bean id="pl.mamzdanie.mbmessageaddon.svc.service.MBMessageAddonLocalService.velocity" class="org.springframework.aop.framework.ProxyFactoryBean" parent="baseVelocityService">
+		<property name="target" ref="pl.mamzdanie.mbmessageaddon.svc.service.MBMessageAddonLocalService.impl" />
+	</bean>
+	<bean id="pl.mamzdanie.mbmessageaddon.svc.service.MBMessageAddonLocalServiceUtil" class="pl.mamzdanie.mbmessageaddon.svc.service.MBMessageAddonLocalServiceUtil">
+		<property name="service" ref="pl.mamzdanie.mbmessageaddon.svc.service.MBMessageAddonLocalService.impl" />
+	</bean>
+	<bean id="pl.mamzdanie.mbmessageaddon.svc.service.persistence.MBMessageAddonPersistence.impl" class="pl.mamzdanie.mbmessageaddon.svc.service.persistence.MBMessageAddonPersistenceImpl" parent="basePersistence" />
+	<bean id="pl.mamzdanie.mbmessageaddon.svc.service.persistence.MBMessageAddonUtil" class="pl.mamzdanie.mbmessageaddon.svc.service.persistence.MBMessageAddonUtil">
+		<property name="persistence" ref="pl.mamzdanie.mbmessageaddon.svc.service.persistence.MBMessageAddonPersistence.impl" />
+	</bean>
+</beans>

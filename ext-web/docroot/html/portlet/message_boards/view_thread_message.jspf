@@ -1,0 +1,329 @@
+
+<%@page import="com.liferay.portlet.messageboards.model.MBMessage"%>
+<%@page import="pl.mamzdanie.CommonUtils"%>
+<%@page import="pl.mamzdanie.mbmessageaddon.svc.NoSuchMBMessageAddonException"%>
+<%@page import="pl.mamzdanie.mbmessageaddon.svc.service.MBMessageAddonLocalServiceUtil"%>
+<%@page import="pl.mamzdanie.mbmessageaddon.svc.model.MBMessageAddon"%>
+<%@page import="pl.mamzdanie.mbmessageaddon.svc.MBMessageStatusType"%>
+<%
+	/**
+	 * Copyright (c) 2000-2009 Liferay, Inc. All rights reserved.
+	 *
+	 * Permission is hereby granted, free of charge, to any person obtaining a copy
+	 * of this software and associated documentation files (the "Software"), to deal
+	 * in the Software without restriction, including without limitation the rights
+	 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	 * copies of the Software, and to permit persons to whom the Software is
+	 * furnished to do so, subject to the following conditions:
+	 *
+	 * The above copyright notice and this permission notice shall be included in
+	 * all copies or substantial portions of the Software.
+	 *
+	 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	 * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+	 * SOFTWARE.
+	 */
+%>
+
+<%
+	boolean isCreativeCommonsLicense = false;
+	boolean isQuoteLicense = false;
+	
+	boolean isActive = false;
+	boolean isVisible = false;
+	
+	MBMessageAddon threadMbMessageAddon;
+	
+	try {
+		threadMbMessageAddon = MBMessageAddonLocalServiceUtil.getMBMessageAddon(message.getMessageId());
+	} catch (NoSuchMBMessageAddonException e) {
+		threadMbMessageAddon = null;
+	}
+	
+	if (threadMbMessageAddon != null) {
+		isCreativeCommonsLicense = threadMbMessageAddon.getLicenseType().equalsIgnoreCase("CREATIVE_COMMONS_LICENSE");
+		isQuoteLicense = threadMbMessageAddon.getLicenseType().equalsIgnoreCase("QUOTE_LICENSE");
+		
+		isActive = threadMbMessageAddon.getActive() != null && threadMbMessageAddon.getActive().booleanValue();
+		isVisible = threadMbMessageAddon.getVisible() != null && threadMbMessageAddon.getVisible().booleanValue();		
+	} else {
+		isCreativeCommonsLicense = true;
+	}
+%>
+<%
+	String visibleAction = isVisible ? "hide" : "show";
+	
+	String moderatorVisibleUrl = null;
+	String moderatorActiveUrl = null;
+	String rejectMessageUrl = null;
+	String approveMessageUrl = null;
+	
+	String activeAction = isActive ? "commentAndInactive" : "active";
+	
+	String threadDetailsURL = "/web/guest/konsultacje/-/message_boards/message/";
+	
+	if (threadMbMessageAddon != null && threadMbMessageAddon.getMessageId() != null) {
+		moderatorVisibleUrl = "/web/guest/moderator?" +
+				"p_p_id=moderator" + "&" +
+				"p_p_lifecycle=0" + "&" +
+				"p_p_state=normal" + "&" +
+				"p_p_mode=view" + "&" +
+				"p_p_col_id=column-1" + "&" +
+				"p_p_col_count=1" + "&" +
+				"_moderator_struts_action=%2Fp%2Fmoderator%2Fview" + "&" +
+				"_moderator_cmd=" + visibleAction + "&" +
+				"_moderator_redirect=" + threadDetailsURL + message.getParentMessageId() + "&" +
+				"_moderator_messageId=" + String.valueOf(threadMbMessageAddon.getMessageId());
+		
+		moderatorActiveUrl = "/web/guest/moderator?" +
+				"p_p_id=moderator" + "&" +
+				"p_p_lifecycle=" + (isActive ? "0" : "1") + "&" +
+				"p_p_state=normal" + "&" +
+				"p_p_mode=view" + "&" +
+				"p_p_col_id=column-1" + "&" +
+				"p_p_col_count=1" + "&" +
+				"_moderator_struts_action=/p/moderator/view" + "&" +
+				"_moderator_cmd=" + activeAction + "&" +
+				"_moderator_redirect=" + threadDetailsURL + message.getParentMessageId() + "&" +
+				"_moderator_messageId=" + String.valueOf(threadMbMessageAddon.getMessageId());
+		
+		rejectMessageUrl = "/web/guest/moderator" +
+				"?p_p_id=moderator" + "&" +
+				"p_p_lifecycle=0" + "&" +
+				"p_p_state=normal" + "&" +
+				"p_p_mode=view" + "&" +
+				"p_p_col_id=column-1" + "&" +
+				"p_p_col_count=1" + "&" +
+				"_moderator_struts_action=%2Fp%2Fmoderator%2Fview&_moderator_cmd=commentAndReject" + "&" +
+				"_moderator_redirect=" + threadDetailsURL + message.getParentMessageId() + "&" +
+				"_moderator_messageId=" + String.valueOf(threadMbMessageAddon.getMessageId());
+		
+		approveMessageUrl = "/web/guest/moderator" +
+				"?p_p_id=moderator" + "&" +
+				"p_p_lifecycle=1" + "&" +
+				"p_p_state=normal" + "&" +
+				"p_p_mode=view" + "&" +
+				"p_p_col_id=column-1" + "&" +
+				"p_p_col_count=1" + "&" +
+				"_moderator_struts_action=%2Fp%2Fmoderator%2Fview&_moderator_cmd=approve" + "&" +
+				"_moderator_redirect=" + threadDetailsURL + message.getParentMessageId() + "&" +
+				"_moderator_messageId=" + String.valueOf(threadMbMessageAddon.getMessageId());
+	}
+%>
+			
+<a id="<portlet:namespace />message_<%=message.getMessageId()%>"></a>
+
+<%
+	boolean isUserOwner = threadMbMessageAddon != null && user.getUserId() == threadMbMessageAddon.getUserId();
+	boolean isEmiterOrAdmin = CommonUtils.isEmiter(user) || CommonUtils.isTechnicalAdmin(user);
+
+	String postHeaderCss = isVisible ? "post_header" : "hidden_post_header";
+	postHeaderCss = isActive ? postHeaderCss : "inactive_post_header";
+		
+	boolean waitingForModerator = false;
+	boolean inactiveMessages = false;
+		
+	if (threadMbMessageAddon != null && isUserOwner && !threadMbMessageAddon.getStatus().equals(MBMessageStatusType.APPROVED_MESSAGE.name())) {
+		waitingForModerator = true;
+	} else if (threadMbMessageAddon != null && isEmiterOrAdmin &&
+			!threadMbMessageAddon.getStatus().equals(MBMessageStatusType.REJECTED_MESSAGE.name()) &&
+			!threadMbMessageAddon.getStatus().equals(MBMessageStatusType.APPROVED_MESSAGE.name())) {
+		waitingForModerator = true;
+	} else if (threadMbMessageAddon != null && (isEmiterOrAdmin || isUserOwner) && !isActive) {
+		waitingForModerator = true;
+	} else {
+		waitingForModerator = false;		
+	}
+	
+	String postTableCss = waitingForModerator ? isActive ? "not_approved_post_table" : "inactive_post_table" : "post_table";
+	postHeaderCss = waitingForModerator ? isActive? "not_approved_post_header" : "inactive_post_header" : postHeaderCss;
+%>
+
+<div class="<%=postHeaderCss%>"><%=dateFormatDateTime.format(message.getModifiedDate())%>
+	<%
+	if (waitingForModerator) {
+	%>
+		&nbsp;&nbsp;<strong><liferay-ui:message key="message.header.status.waitingForModerator"/></strong>
+	<%
+	}
+	%>
+	<span class="right"><a href="#<portlet:namespace />message_<%=message.getMessageId()%>">#<%=message.getMessageId()%></a></span>
+	
+	<c:if test="<%=isEmiterOrAdmin%>">
+		<c:if test="<%=threadMbMessageAddon != null && !threadMbMessageAddon.getStatus().equals(MBMessageStatusType.APPROVED_MESSAGE.name()) && !threadMbMessageAddon.getStatus().equals(MBMessageStatusType.REJECTED_MESSAGE.name())%>">
+			<span class="right moderatorMessageAction"><a href="<%=rejectMessageUrl%>"><liferay-ui:message key="moderator.action.reject"/>&nbsp;</a></span>
+			<span class="right moderatorMessageAction"><a href="#" onclick="_updateMessage('<%=approveMessageUrl%>'); return false;"><liferay-ui:message key="moderator.action.approve"/></a></span>
+		</c:if>
+		<%-- <c:choose>
+			<c:when test="<%=isVisible%>">					
+				<span class="right moderatorMessageAction"><a href="<%=moderatorVisibleUrl%>"><liferay-ui:message key="moderator.action.hide"/></a></span>
+			</c:when>
+			<c:otherwise>
+				<span class="right moderatorMessageAction"><a href="<%=moderatorVisibleUrl%>"><liferay-ui:message key="moderator.action.show"/></a></span>
+			</c:otherwise>
+		</c:choose> --%>
+		<c:choose>
+			<c:when test="<%=isActive%>">
+				<span class="right moderatorMessageAction"><a href="<%=moderatorActiveUrl%>"><liferay-ui:message key="moderator.action.inactive"/></a></span>
+			</c:when>
+			<c:otherwise>
+				<span class="right moderatorMessageAction"><a href="#" onclick="_updateMessage('<%=moderatorActiveUrl%>'); return false;"><liferay-ui:message key="moderator.action.active"/></a></span>
+			</c:otherwise>
+		</c:choose>
+	</c:if>
+</div>
+<table class="<%=postTableCss%>"
+	id="<portlet:namespace />message_<%=message.getMessageId()%>">
+	<tr>
+		<td class="left_col"><c:choose>
+			<c:when test="<%= message.isAnonymous() %>">
+				<c:choose>
+					<c:when test="<%=isEmiterOrAdmin || isUserOwner%>">
+						<liferay-ui:message key="anonymous" />
+						<%
+							String userDetailsURL;
+									userDetailsURL = "/web/guest/dane-uzytkownika?";
+									userDetailsURL += "p_p_id=userdetails" + "&";
+									userDetailsURL += "p_p_lifecycle=0" + "&";
+									userDetailsURL += "p_p_state=normal" + "&";
+									userDetailsURL += "p_p_mode=view" + "&";
+									userDetailsURL += "p_p_col_id=column-1" + "&";
+									userDetailsURL += "p_p_col_count=1" + "&";
+									userDetailsURL += "user_id=" + message.getUserId();
+						%><a href="<%=userDetailsURL%>"> <liferay-ui:user-display
+							userId="<%= message.getUserId() %>"
+							userName="<%= message.getUserName() %>" displayStyle="<%= 2 %>"></a>
+						</liferay-ui:user-display>
+					</c:when>
+					<c:otherwise>
+						<liferay-ui:message key="anonymous" />
+					</c:otherwise>
+				</c:choose>
+			</c:when>
+			<c:otherwise>
+				<%
+					String userDetailsURL;
+							userDetailsURL = "/web/guest/dane-uzytkownika?";
+							userDetailsURL += "p_p_id=userdetails" + "&";
+							userDetailsURL += "p_p_lifecycle=0" + "&";
+							userDetailsURL += "p_p_state=normal" + "&";
+							userDetailsURL += "p_p_mode=view" + "&";
+							userDetailsURL += "p_p_col_id=column-1" + "&";
+							userDetailsURL += "p_p_col_count=1" + "&";
+							userDetailsURL += "user_id=" + message.getUserId();
+				%><a href="<%=userDetailsURL%>"> <liferay-ui:user-display
+					userId="<%= message.getUserId() %>"
+					userName="<%= message.getUserName() %>" displayStyle="<%= 2 %>"></a>
+				</liferay-ui:user-display>
+			</c:otherwise>
+		</c:choose></td>
+		<td class="right_col">
+		<%
+			String msgBody = BBCodeUtil.getHTML(message);
+			msgBody = StringUtil.replace(msgBody,
+					"@theme_images_path@/emoticons", themeDisplay
+							.getPathThemeImages()
+							+ "/emoticons");
+		%>
+		<div class="message_body"><%=msgBody%></div>
+		<c:if test="<%= message.isAttachments() %>">
+			<%
+				String[] attachmentsFiles = message.getAttachmentsFiles();
+			%>
+			<div class="dots_grey attachments_line"></div>
+			<b><liferay-ui:message key="attachments" />:</b>
+			<br />
+
+			<%
+				for (int j = 0; j < attachmentsFiles.length; j++) {
+						String fileName = FileUtil
+								.getShortFileName(attachmentsFiles[j]);
+						long fileSize = DLServiceUtil.getFileSize(company
+								.getCompanyId(), CompanyConstants.SYSTEM,
+								attachmentsFiles[j]);
+			%>
+			<div class="attachment_row">
+			<div class="file_icon <%=MBUtil.getCssStyledIcon(fileName)%>_ext"></div>
+			<div class="arrows_right"></div>
+			<a
+				href="<portlet:actionURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="struts_action" value="/message_boards/get_message_attachment" /><portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" /><portlet:param name="attachment" value="<%= fileName %>" /></portlet:actionURL>"><%=fileName%></a>
+			</div>
+			<%
+				}
+			%>
+		</c:if> <c:if test="<%= CommonUtils.isTechnicalAdmin(user) && editable %>">
+			<div class="editable_icons"><c:if
+				test="<%= MBMessagePermission.contains(permissionChecker, message, ActionKeys.UPDATE) %>">
+				<portlet:renderURL var="editURL">
+					<portlet:param name="struts_action"
+						value="/message_boards/edit_message" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="messageId"
+						value="<%= String.valueOf(message.getMessageId()) %>" />
+				</portlet:renderURL>
+				<liferay-ui:icon image="edit" url="<%= editURL %>"
+					label="<%= true %>" />
+			</c:if> <c:if
+				test="<%= MBMessagePermission.contains(permissionChecker, message, ActionKeys.PERMISSIONS) %>">
+				<liferay-security:permissionsURL
+					modelResource="<%= MBMessage.class.getName() %>"
+					modelResourceDescription="<%= HtmlUtil.escape(message.getSubject()) %>"
+					resourcePrimKey="<%= String.valueOf(message.getMessageId()) %>"
+					var="permissionsURL" />
+				<liferay-ui:icon image="permissions" url="<%= permissionsURL %>"
+					label="<%= true %>" />
+			</c:if> <c:if
+				test="<%= MBMessagePermission.contains(permissionChecker, message, ActionKeys.DELETE) %>">
+				<%
+					PortletURL categoryURL = renderResponse.createRenderURL();
+
+							categoryURL.setParameter("struts_action",
+									"/message_boards/view");
+							categoryURL.setParameter("categoryId", String
+									.valueOf(message.getCategoryId()));
+				%>
+				<portlet:actionURL var="deleteURL">
+					<portlet:param name="struts_action"
+						value="/message_boards/edit_message" />
+					<portlet:param name="<%= Constants.CMD %>"
+						value="<%= Constants.DELETE %>" />
+					<portlet:param name="redirect"
+						value="<%= categoryURL.toString() %>" />
+					<portlet:param name="messageId"
+						value="<%= String.valueOf(message.getMessageId()) %>" />
+				</portlet:actionURL>
+				<liferay-ui:icon-delete url="<%= deleteURL %>" label="<%= true %>" />
+			</c:if>
+			</div>
+		</c:if>
+
+		</div>
+		</td>
+	</tr>
+	<tr>
+		<td class="left_col">
+			&nbsp;
+		</td>
+		<td class="right_col">
+			<c:choose>
+				<c:when test="<%= isCreativeCommonsLicense %>">
+					<a class="licenseLink" href="http://creativecommons.org/licenses/by-sa/3.0/" title="Creative Commons Attribution 3.0 License">				
+						<div class="creativeCommonsLicense">&nbsp;</div>
+					</a>
+				</c:when>
+				<c:when test="<%= isQuoteLicense %>">
+					<a class="licenseLink" href="#<portlet:namespace />message_<%=message.getMessageId()%>" title="Licencja zezwalająca Emitentowi na wykorzystanie wypowiedzi (cytowanie z przytoczeniem autorstwa)">
+						<div class="quoteLicense">&nbsp;</div>
+					</a>
+				</c:when>
+				<c:otherwise>
+					&nbsp;
+				</c:otherwise> 
+			</c:choose>
+		</td>
+	</tr>
+</table>

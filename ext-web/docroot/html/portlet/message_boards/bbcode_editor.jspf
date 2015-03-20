@@ -1,0 +1,50 @@
+<%
+/**
+ * Copyright (c) 2000-2009 Liferay, Inc. All rights reserved.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+%>
+
+<script type="text/javascript">
+	var <portlet:namespace />bbCode = null;
+
+	function <portlet:namespace />getHTML() {
+		return <portlet:namespace />bbCode.getHTML();
+	}
+
+	jQuery(
+		function() {
+			<portlet:namespace />bbCode = new Liferay.Editor.bbCode(
+				{
+					textarea: '#<portlet:namespace />textArea'
+				}
+			);
+
+			<c:if test="<%= quote && Validator.isNull(body) && (curParentMessage != null) %>">
+				var respondee = "<%= UnicodeFormatter.toString(parentAuthor) %>";
+				var quote = "<%= UnicodeFormatter.toString(curParentMessage.getBody(false)) %>";
+
+				<portlet:namespace />bbCode.insertTag("quote", respondee, quote);
+			</c:if>
+		}
+	);
+</script>
+
+<textarea class="lfr-textarea message-edit" name="<portlet:namespace />textArea" id="<portlet:namespace />textArea"><%= HtmlUtil.escape(GetterUtil.getString(body)) %></textarea>

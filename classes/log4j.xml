@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/"
+	debug="false">
+
+	<appender name="ConsoleAppender" class="org.apache.log4j.ConsoleAppender">
+		<param name="Threshold" value="error" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{ABSOLUTE} %-5p [%c{1}:%L] %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="Errors" class="org.apache.log4j.rolling.RollingFileAppender">
+		<param name="Threshold" value="error" />
+		<rollingPolicy class="org.apache.log4j.rolling.TimeBasedRollingPolicy">
+			<param name="FileNamePattern"
+				value="${catalina.home}/logs/errors.%d{yyyy-MM-dd}.log.gz" />
+		</rollingPolicy>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p [%t] [%c{1}:%L] %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="Debug" class="org.apache.log4j.rolling.RollingFileAppender">
+		<param name="Threshold" value="debug" />
+		<rollingPolicy class="org.apache.log4j.rolling.TimeBasedRollingPolicy">
+			<param name="FileNamePattern" value="${catalina.home}/logs/debug.%d{yyyy-MM-dd}.log.gz" />
+		</rollingPolicy>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p [%t] [%c{1}:%L] %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="Db-Debug" class="org.apache.log4j.rolling.RollingFileAppender">
+		<param name="Threshold" value="debug" />
+		<rollingPolicy class="org.apache.log4j.rolling.TimeBasedRollingPolicy">
+			<param name="FileNamePattern"
+				value="${catalina.home}/logs/debug/db-debug.%d{yyyy-MM-dd}.log.gz" />
+		</rollingPolicy>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p [%t] [%c{1}:%L] %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="Axis" class="org.apache.log4j.rolling.RollingFileAppender">
+		<param name="Threshold" value="debug" />
+		<rollingPolicy class="org.apache.log4j.rolling.TimeBasedRollingPolicy">
+			<param name="FileNamePattern"
+				value="${catalina.home}/logs/debug/axis.%d{yyyy-MM-dd}.log.gz" />
+		</rollingPolicy>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p [%t] [%c{1}:%L] %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="Api" class="org.apache.log4j.rolling.RollingFileAppender">
+		<param name="Threshold" value="debug" />
+		<rollingPolicy class="org.apache.log4j.rolling.TimeBasedRollingPolicy">
+			<param name="FileNamePattern"
+				value="${catalina.home}/logs/debug/api.%d{yyyy-MM-dd}.log.gz" />
+		</rollingPolicy>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p [%t] [%c{1}:%L] %m%n" />
+		</layout>
+	</appender>
+
+
+	<appender name="MzEvent" class="org.apache.log4j.rolling.RollingFileAppender">
+		<param name="Threshold" value="debug" />
+		<rollingPolicy class="org.apache.log4j.rolling.TimeBasedRollingPolicy">
+			<param name="FileNamePattern"
+				value="${catalina.home}/logs/debug/mz.%d{yyyy-MM-dd}.log.gz" />
+		</rollingPolicy>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p [%t] [%c{1}:%L] %m%n" />
+		</layout>
+	</appender>
+
+	<logger name="org.apache.axis.transport.http">
+		<level value="error" />
+		<appender-ref ref="Axis" />
+	</logger>
+
+	<logger name="org.hibernate.SQL" additivity="false">
+		<level value="error" />
+		<appender-ref ref="Db-Debug" />
+	</logger>
+
+	<logger name="org.hibernate.type" additivity="false">
+		<level value="error" />
+		<appender-ref ref="Db-Debug" />
+	</logger>
+
+	<logger name="pl.mamzdanie.api.ApiServlet" additivity="false">
+		<level value="debug" />
+		<appender-ref ref="Api" />
+	</logger>
+
+	<logger name="com.liferay.portlet.messageboards.action.EditMessageAction"
+		additivity="false">
+		<level value="debug" />
+		<appender-ref ref="MzEvent" />
+	</logger>
+
+	<logger name="pl.mamzdanie.manager.impl.SummaryManagerImpl"
+		additivity="false">
+		<level value="debug" />
+		<appender-ref ref="MzEvent" />
+	</logger>
+
+	<logger name="com.liferay.portlet.login.action.CreateAccountAction"
+		additivity="false">
+		<level value="debug" />
+		<appender-ref ref="MzEvent" />
+	</logger>
+
+	<root>
+		<priority value="debug" />
+		<appender-ref ref="ConsoleAppender" />
+		<appender-ref ref="Errors" />
+		<appender-ref ref="Debug" />
+	</root>
+</log4j:configuration>

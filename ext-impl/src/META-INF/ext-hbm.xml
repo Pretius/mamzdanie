@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-lazy="false" auto-import="false">
+	<class name="com.ext.portlet.reports.model.impl.ReportsEntryImpl" table="ReportsEntry">
+		<cache usage="read-write" />
+		<id name="entryId" type="java.lang.String">
+			<generator class="assigned" />
+		</id>
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="pl.mamzdanie.mbthreadaddon.svc.model.impl.MBAddonImpl" table="mz_mbthread_addon">
+		<cache usage="read-write" />
+		<id name="threadId" column="thread_id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="dateFrom" column="date_from" type="org.hibernate.type.TimestampType" />
+		<property name="dateTo" column="date_to" type="org.hibernate.type.TimestampType" />
+		<property name="discussionArea" column="discussion_area" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="territory" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="signature" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="accepted" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="summaryId" column="summary_id" />
+		<property name="mainAttachment" column="main_attachment" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="pl.mamzdanie.threaddetail.svc.model.impl.ThreadDetailImpl" table="mz_thread_detail">
+		<cache usage="read-write" />
+		<id name="rootMessageId" column="rootmessageid" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="username" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="subject" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="dateFrom" column="date_from" type="org.hibernate.type.TimestampType" />
+		<property name="dateTo" column="date_to" type="org.hibernate.type.TimestampType" />
+		<property name="signature" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="quantity" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="active" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="accepted" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="summaryId" column="summary_id" />
+		<property name="userId" column="userid" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="organizationId" />
+		<property name="organizationName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="threadId" />
+	</class>
+	<class name="pl.mamzdanie.useraddon.svc.model.impl.UserAddonImpl" table="mz_user_addon">
+		<cache usage="read-write" />
+		<id name="userId" column="userid" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="phone" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="position" column="companyposition" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="organizationId" column="organizationid" />
+		<property name="notify" />
+		<property name="apiKey" column="apikey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="pl.mamzdanie.userorganization.svc.model.impl.UserOrganizationImpl" table="mz_organization">
+		<cache usage="read-write" />
+		<id name="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="address" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="postalCode" column="postal_code" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="city" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="phone" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="fax" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="email" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="pl.mamzdanie.mbmessageaddon.svc.model.impl.MBMessageAddonImpl" table="mz_mbmessage_addon">
+		<cache usage="read-write" />
+		<id name="messageId" column="message_id" type="java.lang.Long">
+			<generator class="assigned" />
+		</id>
+		<property name="userId" column="user_id" />
+		<property name="issuerId" column="issuer_id" />
+		<property name="threadId" column="thread_id" />
+		<property name="licenseType" column="license_type" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="status" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="comments" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="oldMessageId" column="old_message_id" />
+		<property name="active" />
+		<property name="visible" />
+	</class>
+</hibernate-mapping>

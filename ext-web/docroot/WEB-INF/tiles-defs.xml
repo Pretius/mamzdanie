@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+
+<tiles-definitions>
+
+	<!-- Reports -->
+
+	<definition name="portlet.ext.reports.view" extends="portlet">
+		<put name="portlet_content" value="/portlet/ext/reports/view.jsp" />
+	</definition>
+
+	<definition name="portlet.ext.reports.view_reports" extends="portlet">
+		<put name="portlet_content" value="/portlet/ext/reports/view_reports.jsp" />
+	</definition>
+
+	<definition extends="portlet" name="p.mainpage.view">
+		<put name="portlet_content" value="/portlet/ext/mainpage/view.jsp" />
+	</definition>
+	
+	<definition extends="portlet" name="p.consultationsgrid.view">
+		<put name="portlet_content" value="/portlet/ext/consultationsgrid/view.jsp" />
+	</definition>
+	
+	<definition extends="portlet" name="p.userdetails.view">
+		<put name="portlet_content" value="/portlet/ext/userdetails/view.jsp" />
+	</definition>
+	
+	<definition extends="portlet" name="p.edit_account.view">
+		<put name="portlet_content" value="/portlet/ext/editaccount/view.jsp" />
+	</definition>
+	
+	<definition extends="portlet" name="p.moderator.view">
+		<put name="portlet_content" value="/portlet/ext/moderator/view.jsp" />
+	</definition>	
+	
+	<definition extends="portlet" name="p.moderator.message">
+		<put name="portlet_content" value="/portlet/ext/moderator/messageView.jsp" />
+	</definition>
+	
+	<definition extends="portlet" name="p.moderator.reject">
+		<put name="portlet_content" value="/portlet/ext/moderator/rejectView.jsp" />
+	</definition>
+	
+	<definition extends="portlet" name="p.moderator.inactive">
+		<put name="portlet_content" value="/portlet/ext/moderator/inactiveView.jsp" />
+	</definition>
+	
+</tiles-definitions>

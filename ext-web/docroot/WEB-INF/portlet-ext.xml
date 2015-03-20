@@ -1,0 +1,234 @@
+<?xml version="1.0"?>
+
+<portlet-app>
+	<portlet>
+		<portlet-name>EXT_1</portlet-name>
+		<display-name>Reports</display-name>
+		<portlet-class>com.ext.portlet.reports.ReportsPortlet</portlet-class>
+		<init-param>
+			<name>view-action</name>
+			<value>/ext/reports/view_reports</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
+		<portlet-preferences>
+			<preference>
+				<name>test</name>
+				<value>123</value>
+			</preference>
+		</portlet-preferences>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
+	
+	<portlet>
+        <portlet-name>main_page</portlet-name>
+        <portlet-info>
+            <title>Strona glowna</title>
+        </portlet-info>
+        <display-name>Strona glowna</display-name>
+        <portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
+        <init-param>
+            <name>view-action</name>
+            <value>/p/main_page/view</value>
+        </init-param>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+        </supports>
+        <resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
+        <portlet-preferences/>
+        <security-role-ref>
+            <role-name>power-user</role-name>
+        </security-role-ref>
+        <security-role-ref>
+            <role-name>user</role-name>
+        </security-role-ref>
+    </portlet>
+    
+    <portlet>
+        <portlet-name>consultations_grid</portlet-name>
+        <portlet-info>
+            <title>Tabela konsultacji</title>
+        </portlet-info>
+        <display-name>Tabela konsultacji</display-name>
+        <portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
+        <init-param>
+            <name>view-action</name>
+            <value>/p/consultations_grid/view</value>
+        </init-param>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+        </supports>
+        <resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
+        <portlet-preferences/>
+        <security-role-ref>
+            <role-name>power-user</role-name>
+        </security-role-ref>
+        <security-role-ref>
+            <role-name>user</role-name>
+        </security-role-ref>
+    </portlet>
+    
+     <portlet>
+        <portlet-name>edit_account</portlet-name>
+        <portlet-info>
+            <title>Edycja danych</title>
+        </portlet-info>
+        <display-name>Edycja danych</display-name>
+        <portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
+        <init-param>
+            <name>view-action</name>
+            <value>/p/edit_account/view</value>
+        </init-param>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+        </supports>
+        <resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
+        <portlet-preferences/>
+        <security-role-ref>
+            <role-name>power-user</role-name>
+        </security-role-ref>
+        <security-role-ref>
+            <role-name>user</role-name>
+        </security-role-ref>
+    </portlet>    
+    
+    <portlet>
+        <portlet-name>last_closed</portlet-name>
+        <portlet-info>
+            <title>Ostatnio zamkniete</title>
+        </portlet-info>
+        <display-name>Ostatnio zamkniete</display-name>
+        <portlet-class>com.liferay.util.bridges.jsp.JSPPortlet</portlet-class>
+        <init-param>
+            <name>view-jsp</name>
+            <value>/html/portlet/ext/last_closed/view.jsp</value>
+        </init-param>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+        </supports>
+        <portlet-preferences/>
+        <resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
+        <security-role-ref>
+            <role-name>power-user</role-name>
+        </security-role-ref>
+        <security-role-ref>
+            <role-name>user</role-name>
+        </security-role-ref>
+    </portlet>
+    
+    <portlet>
+        <portlet-name>pending</portlet-name>
+        <portlet-info>
+            <title>Oczekujace</title>
+        </portlet-info>
+        <display-name>Oczekujace</display-name>
+        <portlet-class>com.liferay.util.bridges.jsp.JSPPortlet</portlet-class>
+        <init-param>
+            <name>view-jsp</name>
+            <value>/html/portlet/ext/pending/view.jsp</value>
+        </init-param>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+        </supports>
+        <portlet-preferences/>
+        <resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
+        <security-role-ref>
+            <role-name>power-user</role-name>
+        </security-role-ref>
+        <security-role-ref>
+            <role-name>user</role-name>
+        </security-role-ref>
+    </portlet>
+    
+    <portlet>
+        <portlet-name>closed</portlet-name>
+        <portlet-info>
+            <title>Zamkniete</title>
+        </portlet-info>
+        <display-name>Zamkniete</display-name>
+        <portlet-class>com.liferay.util.bridges.jsp.JSPPortlet</portlet-class>
+        <init-param>
+            <name>view-jsp</name>
+            <value>/html/portlet/ext/closed/view.jsp</value>
+        </init-param>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+        </supports>
+        <portlet-preferences/>
+        <resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
+        <security-role-ref>
+            <role-name>power-user</role-name>
+        </security-role-ref>
+        <security-role-ref>
+            <role-name>user</role-name>
+        </security-role-ref>
+    </portlet>
+    <portlet>
+        <portlet-name>userdetails</portlet-name>
+        <portlet-info>
+            <title>Dane Użytkownika</title>
+        </portlet-info>
+        <display-name>Dane Użytkownika</display-name>
+        <portlet-class>com.liferay.util.bridges.jsp.JSPPortlet</portlet-class>
+        <init-param>
+            <name>view-jsp</name>
+            <value>/html/portlet/ext/userdetails/view.jsp</value>
+        </init-param>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+        </supports>
+        <portlet-preferences/>
+        <resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
+        <security-role-ref>
+            <role-name>power-user</role-name>
+        </security-role-ref>
+        <security-role-ref>
+            <role-name>user</role-name>
+        </security-role-ref>
+    </portlet>
+    
+    <portlet>
+        <portlet-name>moderator</portlet-name>
+        <portlet-info>
+            <title>Moderator</title>
+        </portlet-info>
+        <display-name>Moderator</display-name>
+        <portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
+        <init-param>
+            <name>view-action</name>
+            <value>/p/moderator/view</value>
+        </init-param>
+        <!-- <portlet-class>com.liferay.util.bridges.jsp.JSPPortlet</portlet-class>
+        <init-param>
+            <name>view-jsp</name>
+            <value>/html/portlet/ext/moderator/view.jsp</value>
+        </init-param> -->
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+        </supports>
+        <resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
+        <portlet-preferences/>
+        <security-role-ref>
+            <role-name>power-user</role-name>
+        </security-role-ref>
+        <security-role-ref>
+            <role-name>user</role-name>
+        </security-role-ref>
+    </portlet>   
+</portlet-app>

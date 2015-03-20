@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+
+<struts-config>
+	<action-mappings>
+
+		<!-- Reports -->
+
+		<action path="/ext/reports/view_reports" type="com.ext.portlet.reports.action.ViewReportsAction">
+			<forward name="portlet.ext.reports.view" path="portlet.ext.reports.view" />
+			<forward name="portlet.ext.reports.view_reports" path="portlet.ext.reports.view_reports" />
+		</action>
+
+		<action path="/p/main_page/view" type="pl.mamzdanie.mainpage.action.MainPageViewAction">
+			<forward name="success" path="p.mainpage.view" />
+		</action>
+
+		<action path="/p/consultations_grid/view"
+			type="pl.mamzdanie.consultationsgrid.action.ConsultationsGridViewAction">
+			<forward name="success" path="p.consultationsgrid.view" />
+		</action>
+
+		<action path="/p/edit_account/view"
+			type="pl.mamzdanie.editaccount.action.EditAccountViewAction">
+			<forward name="success" path="p.edit_account.view" />
+		</action>
+		
+		<action path="/p/moderator/view"
+			type="pl.mamzdanie.moderator.action.ModeratorViewAction">
+			<forward name="success" path="p.moderator.view" />
+		</action>
+		
+		<action path="/ext/userdetails/view" forward="p.userdetails.view"></action>
+	</action-mappings>
+</struts-config>

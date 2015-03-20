@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 5.2.0//EN"
+	"http://www.liferay.com/dtd/liferay-service-builder_5_2_0.dtd">
+
+<service-builder package-path="pl.mamzdanie.mbmessageaddon.svc">
+	<namespace>mbmessage_addon</namespace>
+	<entity name="MBMessageAddon" local-service="true" remote-service="false"
+		table="mz_mbmessage_addon">
+		<column name="messageId" db-name="message_id" type="Long" primary="true" />		
+		<column name="userId" db-name="user_id" type="Long" />
+		<column name="issuerId" db-name="issuer_id" type="Long" />
+		<column name="threadId" db-name="thread_id" type="Long" />
+		<column name="licenseType" db-name="license_type" type="String" />
+		<column name="status" db-name="status" type="String" />
+		<column name="comments" db-name="comments" type="String" />
+		<column name="oldMessageId" db-name="old_message_id" type="Long" />
+		<column name="active" db-name="active" type="Boolean" />
+		<column name="visible" db-name="visible" type="Boolean" />
+	</entity>
+</service-builder>

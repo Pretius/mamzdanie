@@ -1,0 +1,143 @@
+<%@page import="com.liferay.portal.kernel.util.ParamUtil"%>
+<%@page import="pl.mamzdanie.mbmessageaddon.svc.MBMessageStatusType"%>
+<%@page import="java.util.Collections"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
+<%@page import="com.liferay.portlet.messageboards.model.MBMessage"%>
+<%@page import="pl.mamzdanie.CommonUtils"%>
+<%
+	/**
+	 * Copyright (c) 2000-2009 Liferay, Inc. All rights reserved.
+	 *
+	 * Permission is hereby granted, free of charge, to any person obtaining a copy
+	 * of this software and associated documentation files (the "Software"), to deal
+	 * in the Software without restriction, including without limitation the rights
+	 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	 * copies of the Software, and to permit persons to whom the Software is
+	 * furnished to do so, subject to the following conditions:
+	 *
+	 * The above copyright notice and this permission notice shall be included in
+	 * all copies or substantial portions of the Software.
+	 *
+	 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	 * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+	 * SOFTWARE.
+	 */
+%>
+
+<%
+	PortletURL portletURL = renderResponse.createRenderURL();
+
+	portletURL.setParameter("struts_action", "/message_boards/view_message");
+	portletURL.setParameter("messageId", String.valueOf(message.getMessageId()));
+	
+	SearchContainer searchContainer = null;
+
+	List<MBMessage> messages2 = null;
+	if (threadView.equals(MBThreadImpl.THREAD_VIEW_FLAT)) {
+		int delta = 5;
+
+		searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, delta,
+				portletURL, null, null);
+
+		int total = MBMessageLocalServiceUtil.getThreadMessagesCount(message.getThreadId());
+
+		total--;
+
+		if (summary) {
+			total--;
+		}
+
+		searchContainer.setTotal(total);
+
+		messages = MBMessageLocalServiceUtil.getThreadMessages(message.getThreadId(), searchContainer.getStart() + 1,
+				searchContainer.getEnd() + 1);
+		messages2 = new ArrayList(messages);
+		Collections.copy(messages2, messages);
+
+		if (summary) {
+			for (int i = messages2.size() - 1; i >= 0; i--)
+				if (messages2.get(i).getMessageId() == summaryMessage.getMessageId()) {
+					messages2.remove(i);
+					break;
+				}
+		}
+
+		searchContainer.setResults(messages2);
+	}
+%>
+<div class="messages_container">
+	<c:if
+		test="<%= threadView.equals(MBThreadImpl.THREAD_VIEW_FLAT) && (searchContainer.getTotal() > searchContainer.getDelta()) %>">
+		<div class="taglib-search-iterator-page-iterator-top">
+			<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" />
+		</div>
+	</c:if>
+
+	<%
+		int depth = 0;
+		for (int i = 0; i < messages2.size(); i++) {
+			message = messages2.get(i);
+			
+			MBMessageAddon mbMessageAddon;
+			try {
+				mbMessageAddon = MBMessageAddonLocalServiceUtil.getMBMessageAddon(message.getMessageId());
+			} catch (NoSuchMBMessageAddonException e) {
+				mbMessageAddon = null;
+			}
+			
+			boolean showMessageFlag = false;
+			boolean isOwner = user.getUserId() == mbMessageAddon.getUserId();
+			
+			if (isShowHidden) {
+				showMessageFlag = mbMessageAddon != null &&
+						mbMessageAddon.getActive() != null && mbMessageAddon.getActive().booleanValue() &&
+						(mbMessageAddon.getVisible() == null || !mbMessageAddon.getVisible().booleanValue()) &&
+						mbMessageAddon.getStatus() != null &&
+						mbMessageAddon.getStatus().equals(MBMessageStatusType.APPROVED_MESSAGE.name());
+			} else {				
+				if (isOwner &&
+						/* !mbMessageAddon.getStatus().equals(MBMessageStatusType.APPROVED_MESSAGE.name()) && */
+						!mbMessageAddon.getStatus().equals(MBMessageStatusType.REJECTED_MESSAGE.name())) {
+					showMessageFlag = true;
+				} else if (
+						(CommonUtils.isEmiter(user) || CommonUtils.isTechnicalAdmin(user)) &&
+						/* !mbMessageAddon.getStatus().equals(MBMessageStatusType.APPROVED_MESSAGE.name()) && */
+						!mbMessageAddon.getStatus().equals(MBMessageStatusType.REJECTED_MESSAGE.name())
+				) {
+					showMessageFlag = true;
+				} else {
+					showMessageFlag = mbMessageAddon != null &&
+							mbMessageAddon.getActive() != null && mbMessageAddon.getActive().booleanValue() &&
+							mbMessageAddon.getVisible() != null && mbMessageAddon.getVisible().booleanValue() &&
+							mbMessageAddon.getStatus() != null &&
+							mbMessageAddon.getStatus().equals(MBMessageStatusType.APPROVED_MESSAGE.name());
+				}
+			}
+			
+			if (showMessageFlag) {
+	%>
+	<%@ include file="/html/portlet/message_boards/view_thread_message.jspf"%>
+	
+	<%
+			}
+		}
+	%>
+	<c:if
+		test="<%= threadView.equals(MBThreadImpl.THREAD_VIEW_FLAT) && (searchContainer.getTotal() > searchContainer.getDelta()) %>">
+		<div class="taglib-search-iterator-page-iterator-bottom">
+			<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" />
+		</div>
+	</c:if>
+</div>
+
+<script type="text/javascript">
+	function _updateMessage(actionUrl) {
+		submitForm(document.hrefFm, actionUrl);
+	}
+</script>
+

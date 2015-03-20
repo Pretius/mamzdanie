@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 5.2.0//EN"
+	"http://www.liferay.com/dtd/liferay-service-builder_5_2_0.dtd">
+
+<service-builder package-path="pl.mamzdanie.threaddetail.svc">
+	<namespace>thread_detail</namespace>
+	<entity name="ThreadDetail" local-service="true" remote-service="false"
+		table="mz_thread_detail">
+		<column name="rootMessageId" db-name="rootmessageid" type="long"
+			primary="true" />
+		<column name="username" db-name="username" type="String" />
+		<column name="subject" db-name="subject" type="String" />
+		<column name="dateFrom" db-name="date_from" type="Date" />
+		<column name="dateTo" db-name="date_to" type="Date" />
+		<column name="signature" db-name="signature" type="String" />
+		<column name="quantity" db-name="quantity" type="long" />
+		<column name="active" db-name="active" type="int" />
+		<column name="accepted" db-name="accepted" type="boolean" />
+		<column name="summaryId" db-name="summary_id" type="Long" />
+		<column name="userId" db-name="userid" type="long" />
+		<column name="organizationId" db-name="organizationId" type="Long" />
+		<column name="organizationName" db-name="organizationName"
+			type="String" />
+		<column name="threadId" db-name="threadId" type="Long" />
+	</entity>
+</service-builder>

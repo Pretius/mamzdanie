@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<model-hints>
+	<model name="com.ext.portlet.reports.model.ReportsEntry">
+		<field name="entryId" type="String" />
+		<field name="companyId" type="String" />
+		<field name="userId" type="String" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="name" type="String" />
+	</model>
+	<model name="pl.mamzdanie.mbthreadaddon.svc.model.MBAddon">
+		<field name="threadId" type="long" />
+		<field name="dateFrom" type="Date" />
+		<field name="dateTo" type="Date" />
+		<field name="discussionArea" type="String" />
+		<field name="territory" type="String" />
+		<field name="signature" type="String" />
+		<field name="accepted" type="boolean" />
+		<field name="summaryId" type="Long" />
+		<field name="mainAttachment" type="String" />
+	</model>
+	<model name="pl.mamzdanie.threaddetail.svc.model.ThreadDetail">
+		<field name="rootMessageId" type="long" />
+		<field name="username" type="String" />
+		<field name="subject" type="String" />
+		<field name="dateFrom" type="Date" />
+		<field name="dateTo" type="Date" />
+		<field name="signature" type="String" />
+		<field name="quantity" type="long" />
+		<field name="active" type="int" />
+		<field name="accepted" type="boolean" />
+		<field name="summaryId" type="Long" />
+		<field name="userId" type="long" />
+		<field name="organizationId" type="Long" />
+		<field name="organizationName" type="String" />
+		<field name="threadId" type="Long" />
+	</model>
+	<model name="pl.mamzdanie.useraddon.svc.model.UserAddon">
+		<field name="userId" type="long" />
+		<field name="phone" type="String" />
+		<field name="position" type="String" />
+		<field name="organizationId" type="Long" />
+		<field name="notify" type="Boolean" />
+		<field name="apiKey" type="String" />
+		<field name="description" type="String" />
+	</model>
+	<model name="pl.mamzdanie.userorganization.svc.model.UserOrganization">
+		<field name="id" type="long" />
+		<field name="name" type="String" />
+		<field name="address" type="String" />
+		<field name="postalCode" type="String" />
+		<field name="city" type="String" />
+		<field name="phone" type="String" />
+		<field name="fax" type="String" />
+		<field name="email" type="String" />
+	</model>
+	<model name="pl.mamzdanie.mbmessageaddon.svc.model.MBMessageAddon">
+		<field name="messageId" type="Long" />
+		<field name="userId" type="Long" />
+		<field name="issuerId" type="Long" />
+		<field name="threadId" type="Long" />
+		<field name="licenseType" type="String" />
+		<field name="status" type="String" />
+		<field name="comments" type="String" />
+		<field name="oldMessageId" type="Long" />
+		<field name="active" type="Boolean" />
+		<field name="visible" type="Boolean" />
+	</model>
+</model-hints>

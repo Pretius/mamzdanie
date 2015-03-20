@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 5.2.0//EN"
+	"http://www.liferay.com/dtd/liferay-service-builder_5_2_0.dtd">
+
+<service-builder package-path="pl.mamzdanie.mbthreadaddon.svc">
+	<namespace>mbthread_addon</namespace>
+	<entity name="MBAddon" local-service="true" remote-service="false"
+		table="mz_mbthread_addon">
+		<column name="threadId" db-name="thread_id" type="long" primary="true" />
+		<column name="dateFrom" db-name="date_from" type="Date" />
+		<column name="dateTo" db-name="date_to" type="Date" />
+		<column name="discussionArea" db-name="discussion_area" type="String" />
+		<column name="territory" db-name="territory" type="String" />
+		<column name="signature" db-name="signature" type="String" />
+		<column name="accepted" db-name="accepted" type="boolean" />
+		<column name="summaryId" db-name="summary_id" type="Long" />
+		<column name="mainAttachment" db-name="main_attachment" type="String"/>
+	</entity>
+</service-builder>

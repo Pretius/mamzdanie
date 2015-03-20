@@ -1,0 +1,10 @@
+.classpath
+.project
+.settings
+
+ext-impl/classes
+ext-service/classes
+ext-impl/ext-impl.jar
+ext-service/ext-service.jar
+ext-web/tmp
+bin/
